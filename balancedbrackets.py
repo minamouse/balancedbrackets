@@ -53,6 +53,43 @@ def has_balanced_brackets(phrase):
     Given a string as input, return True or False depending on whether the
     string contains balanced (), {}, [], and/or <>.
     """
+    brackets = ['(', ')',
+                '[', ']',
+                '<', '>',
+                '{', '}']
+
+    pairs = {'(': ')',
+             '[': ']',
+             '<': '>',
+             '{': '}'}
+
+    only_brackets = [x for x in phrase if x in brackets]
+
+    if len(only_brackets) == 1:
+        return False
+    elif len(only_brackets) == 0:
+        return True
+
+    brack_stack = []
+
+    for bracket in only_brackets:
+        if bracket in pairs:
+            brack_stack.append(bracket)
+        else:
+            if brack_stack:
+                old_brack = brack_stack.pop()
+            else:
+                return False
+            if pairs[old_brack] == bracket:
+                pass
+            else:
+                return False
+
+    if brack_stack:
+        return False
+
+    return True
+
 
 if __name__ == '__main__':
     import doctest
